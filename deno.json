@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "strict": true
+  },
+  "lint": {
+    "files": {
+      "include": [
+        "./"
+      ]
+    },
+    "rules": {
+      "tags": [
+        "recommended"
+      ],
+      "include": [
+        "require-await"
+      ],
+      "exclude": [
+        "ban-unused-ignore"
+      ]
+    }
+  },
+  "fmt": {
+    "files": {
+      "include": [
+        "./"
+      ]
+    },
+    "options": {
+      "useTabs": false,
+      "lineWidth": 80,
+      "indentWidth": 2,
+      "singleQuote": true
+    }
+  }
+}

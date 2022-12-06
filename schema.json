@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Config",
+  "description": "Deno deploy for Aliyun 配置文件.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "配置文件标题",
+      "type": "string"
+    },
+    "access": {
+      "type": "object",
+      "properties": {
+        "accessKeyID": {
+          "description": "阿里云函数计算 密钥对",
+          "type": "string",
+          "minLength": 1
+        },
+        "accessKeySecret": {
+          "description": "阿里云函数计算 密钥对",
+          "type": "string",
+          "minLength": 1
+        },
+        "accountID": {
+          "description": "阿里云函数计算 帐号",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["accessKeyID", "accessKeySecret", "accountID"]
+    },
+    "functions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "description": "标签, 用于部分部署",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minimum": 1
+            }
+          },
+          "gitRepo": {
+            "description": "仓库地址, 必要时需要有权限",
+            "type": "string"
+          },
+          "mainFile": {
+            "description": "入口文件, 可结合 dirPath 使用",
+            "type": "string"
+          },
+          "dirPath": {
+            "description": "入口文件所在目录",
+            "type": "string"
+          },
+          "importMapFile": {
+            "type": "string"
+          },
+          "buildEnv": {
+            "description": "编译时环境变量",
+            "type": "object"
+          },
+          "ALIYUN_REGION": {
+            "description": "阿里云函数计算 地区",
+            "type": "string"
+          },
+          "ALIYUN_FC_S_NAME": {
+            "description": "阿里云函数计算 服务名称",
+            "type": "string"
+          },
+          "ALIYUN_FC_F_NAME": {
+            "description": "阿里云函数计算 函数名称",
+            "type": "string"
+          },
+          "env": {
+            "description": "运行时环境变量",
+            "type": "array",
+            "items": {
+              "description": "一项环境变量",
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maximum": 2,
+              "minimum": 2
+            }
+          },
+          "instanceConcurrency": {
+            "description": "阿里云函数计算 并发数量",
+            "type": "number",
+            "minimum": 1
+          },
+          "cpu": {
+            "description": "阿里云函数计算 函数的CPU规格，单位为vCPU，为0.05 vCPU的倍数",
+            "type": "number",
+            "minimum": 0.05
+          },
+          "diskSize": {
+            "description": "阿里云函数计算 函数的磁盘规格，单位为MB, 512 免费",
+            "type": "number",
+            "enum": [512, 10240]
+          },
+          "memorySize": {
+            "description": "阿里云函数计算 内存大小 最小 128 MB， 最大 32 GB，步长 64 MB",
+            "type": "number",
+            "minimum": 128
+          },
+          "caPort": {
+            "description": "阿里云函数计算 端口号",
+            "type": "number"
+          },
+          "timeout": {
+            "description": "阿里云函数计算 超时时间",
+            "type": "number"
+          }
+        },
+        "required": [
+          "tags",
+          "gitRepo",
+          "mainFile",
+          "importMapFile",
+          "ALIYUN_REGION",
+          "ALIYUN_FC_S_NAME",
+          "ALIYUN_FC_F_NAME",
+          "env",
+          "instanceConcurrency",
+          "memorySize",
+          "timeout"
+        ]
+      }
+    }
+  },
+  "required": ["access", "functions"]
+}
